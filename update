@@ -1,0 +1,21 @@
+#!/bin/bash
+
+T_HOST=$(echo $1 | cut -d . -f 1)
+T_DOMAIN=$(echo $1 | cut -d . -f 2-)
+if [ $T_HOST == $T_DOMAIN ]; then
+	T_DOMAIN=$(hostname -f | cut -d . -f 2-)
+fi
+
+echo "Updating $T_HOST in domain $T_DOMAIN."
+
+case $T_DOMAIN in
+	uah.edu)
+		T_USERNAME=hf0002
+		;;
+	*)
+		echo "...Sorry, I don't know what username to use for machines in the domain $T_DOMAIN."
+		exit 1
+esac
+
+ssh -t $T_USERNAME@$1 "if [ -e /etc/debian_version ]; then sudo apt-get dist-upgrade; else if [ -e /etc/redhat-release ]; then sudo yum update; else echo "I don\\\'t know how to update a box with this distro!"; fi; fi"
+
