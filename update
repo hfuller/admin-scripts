@@ -12,6 +12,9 @@ case $T_DOMAIN in
 	uah.edu)
 		T_USERNAME=hf0002
 		;;
+	256.makerslocal.org)
+		T_USERNAME=hfuller
+		;;
 	*)
 		echo "...Sorry, I don't know what username to use for machines in the domain $T_DOMAIN."
 		exit 1
